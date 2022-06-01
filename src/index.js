@@ -13,9 +13,11 @@ root.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={ <App /> } />
-				<Route path="expenses" element={ <Expenses /> } />
-				<Route path="invoices" element={ <Invoices /> } />
+				{/* Anidacion rutas */}
+				<Route path="/" element={ <App /> }>
+					<Route path="expenses" element={ <Expenses /> } />		{/* Ruta: "/" + "expenses" */}
+					<Route path="invoices" element={ <Invoices /> } />		{/* Ruta: "/" + "invoices" */}
+				</Route>
 			</Routes>
 		</BrowserRouter>
 	</React.StrictMode>
