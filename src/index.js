@@ -18,6 +18,14 @@ root.render(
 					<Route path="expenses" element={ <Expenses /> } />		{/* Ruta: "/" + "expenses" */}
 					<Route path="invoices" element={ <Invoices /> } />		{/* Ruta: "/" + "invoices" */}
 				</Route>
+				<Route
+					path="*"
+					element={
+						<main style={{ padding: "1rem" }}>
+							<p>There's nothing here!</p>
+						</main>
+					}
+				/>
 			</Routes>
 		</BrowserRouter>
 	</React.StrictMode>
