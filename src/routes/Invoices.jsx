@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useSearchParams } from 'react-router-dom';
+import { NavLink, Outlet, useSearchParams, useLocation } from 'react-router-dom';
 
 import { getInvoices } from "../data";
 
@@ -7,6 +7,15 @@ export default function Invoices() {
     let
         invoices = getInvoices(),
         [ searchParams, setSearchParams ] = useSearchParams();  // * useSearchParams: Establecemos el valor de la entrada a lo que sea que esté en el parámetro de búsqueda de filtro (¡es como useState, pero en URLSearchParams en su lugar!)
+
+    function QueryNavLink({ to, name, ...props }) {
+        let location = useLocation();
+
+        console.log( 'location.search', location.search );
+        console.log( 'props', props );
+
+        return <NavLink to={ to + location.search } { ...props } >{ name }</NavLink>
+    }
 
     return (
         <main style={{ padding: "1rem 0" }}>
@@ -43,14 +52,14 @@ export default function Invoices() {
                                 return name.startsWith( filter.toLowerCase() );
                             })
                             .map( ( invoice ) => (
-                            <NavLink
-                                className={ ({ isActive }) => isActive ? "link link-red" : "link link-blue" }
-                                to={ `/invoices/${ invoice.number }` }
-                                key={ invoice.number }
-                            >
-                                { invoice.name }
-                            </NavLink>
-                    ))}
+                                QueryNavLink({ 
+                                    to: `/invoices/${ invoice.number }`,
+                                    name: invoice.name, 
+                                    className: ({ isActive }) => isActive ? "link link-red" : "link link-blue",
+                                    key: invoice.number
+                                })
+                            ))
+                    }
                 </nav>
                 <Outlet />
             </div>
